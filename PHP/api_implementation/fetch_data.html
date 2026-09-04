@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Database Table</title>
+    <style>
+        table { border-collapse: collapse; width: 50%; margin-top: 10px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <button id="loadDataBtn">Load Table Data</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Original ID</th>
+                <th>Info</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Data will be injected here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('loadDataBtn').addEventListener('click', async () => {
+            const response = await fetch('fetch_data.php');
+            const data = await response.json();
+            
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = ''; // Clear previous data
+
+            // Loop through the data and build table rows
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.id}</td>
+                    <td>${row.original_id}</td>
+                    <td>${row.info}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    </script>
+
+</body>
+</html>

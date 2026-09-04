@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Api Implementation</title>
+    </head>
+    <body>
+        <button id="btn">Move Data</button>
+        <p id="feedback"></p>
+
+        <script>
+            document.getElementById('btn').addEventListener('click',async() =>{
+                const feedback = document.getElementById('feedback');
+                feedback.innerText = "Processing...";
+                
+                try{
+                    const response = await fetch('process_action.php',{method: 'POST'});
+                    const data = await response.json();
+
+                    feedback.innerText = data.message;
+                }   catch(error){
+                    feedback.innerText = "Action Failed.";
+                }
+            }
+        );
+        </script>
+    </body>
+</html>
